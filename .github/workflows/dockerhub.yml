@@ -49,6 +49,7 @@ jobs:
           git clone https://oauth2:${{ secrets.TOKEN_GITOPS }}@github.com/Du-devBR/validar-argocd.git
           cd validar-argocd/app/frontend
 
+          git remote set-url origin https://oauth2:${{ secrets.TOKEN_GITOPS }}@github.com/Du-devBR/validar-argocd.git
           # Atualiza a tag da imagem
           sudo apt-get update && sudo apt-get install -y jq
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O yq
