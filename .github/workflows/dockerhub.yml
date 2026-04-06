@@ -45,7 +45,7 @@ jobs:
 
       - name: Update GitOps repo (Helm values)
         run: |
-          git clone https://x-access-token:${{ secrets.TOKEN_GITOPS }}@github.com/Du-devBR/validar-argocd.git
+          git clone https://x-access-token:${{secrets.TOKEN_GITOPS}}@github.com/Du-devBR/validar-argocd.git
           cd validar-argocd/app/frontend
 
           # Atualiza a tag da imagem
