@@ -42,3 +42,22 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Update GitOps repo (Helm values)
+        run: |
+          git clone https://x-access-token:${{ secrets.TOKEN_GITOPS }}@github.com/Du-devBR/validar-argocd.git
+          cd validar-argocd/app/frontend
+
+          # Atualiza a tag da imagem
+          sudo apt-get update && sudo apt-get install -y jq
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O yq
+          chmod +x yq
+
+          ./yq e -i '.image.tag = "${{ github.sha }}"' values.yaml
+
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add values.yaml
+          git commit -m "chore: update image tag to ${{ github.sha }}" || echo "No changes to commit"
+          git push
